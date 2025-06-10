@@ -1,639 +1,638 @@
-  <!DOCTYPE html>
-  <html lang="id">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Visualisasi Algoritma Sorting & Pencarian Data Siswa</title>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      />
-      <style>
-        :root {
-          --primary: #4361ee;
-          --secondary: #3f37c9;
-          --success: #4cc9f0;
-          --danger: #f72585;
-          --warning: #ff9e00;
-          --dark: #1e1e2d;
-          --light: #f8f9fa;
-          --gray: #6c757d;
-          --card-bg: #ffffff;
-          --body-bg: #f0f2f5;
-        }
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualisasi Algoritma Sorting & Pencarian Nilai Mahasiswa</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3f37c9;
+        --success: #4cc9f0;
+        --danger: #f72585;
+        --warning: #ff9e00;
+        --dark: #1e1e2d;
+        --light: #f8f9fa;
+        --gray: #6c757d;
+        --card-bg: #ffffff;
+        --body-bg: #f0f2f5;
+      }
 
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
 
-        body {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: #333;
-          min-height: 100vh;
-          padding: 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        min-height: 100vh;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-        .container {
-          max-width: 1200px;
-          width: 100%;
-          margin: 0 auto;
-        }
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+      }
 
-        header {
-          text-align: center;
-          margin: 20px 0 30px;
-          color: white;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
+      header {
+        text-align: center;
+        margin: 20px 0 30px;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
 
-        header h1 {
-          font-size: 2.8rem;
-          margin-bottom: 10px;
-          background: linear-gradient(
-            to right,
-            #ff9a9e,
-            #fad0c4,
-            #fad0c4,
-            #a1c4fd
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          font-weight: 800;
-        }
+      header h1 {
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        background: linear-gradient(
+          to right,
+          #ff9a9e,
+          #fad0c4,
+          #fad0c4,
+          #a1c4fd
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+      }
 
-        header p {
-          font-size: 1.2rem;
-          max-width: 700px;
-          margin: 0 auto;
-          opacity: 0.9;
-        }
+      header p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.9;
+      }
 
-        .card {
-          background: var(--card-bg);
-          border-radius: 16px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-          overflow: hidden;
-          margin-bottom: 30px;
-          transition: transform 0.3s ease;
-        }
+      .card {
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+      }
 
-        .card:hover {
-          transform: translateY(-5px);
-        }
+      .card:hover {
+        transform: translateY(-5px);
+      }
 
-        .card-header {
-          background: linear-gradient(120deg, var(--primary), var(--secondary));
-          color: white;
-          padding: 20px;
-          font-size: 1.4rem;
-          font-weight: 600;
-          display: flex;
-          align-items: center;
-        }
+      .card-header {
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 20px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+      }
 
-        .card-header i {
-          margin-right: 12px;
-          font-size: 1.6rem;
-        }
+      .card-header i {
+        margin-right: 12px;
+        font-size: 1.6rem;
+      }
 
-        .card-body {
-          padding: 25px;
-        }
+      .card-body {
+        padding: 25px;
+      }
 
+      .menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .menu-btn {
+        flex: 1;
+        min-width: 200px;
+        padding: 16px 20px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(120deg, #5e72e4, #825ee4);
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(94, 114, 228, 0.3);
+      }
+
+      .menu-btn i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      .menu-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(94, 114, 228, 0.4);
+      }
+
+      .menu-btn.active {
+        background: linear-gradient(120deg, #00d2b5, #00c6ff);
+        box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
+      }
+
+      .input-section {
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .input-group label {
+        font-weight: 600;
+        color: var(--dark);
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-group label i {
+        margin-right: 10px;
+        color: var(--primary);
+      }
+
+      textarea,
+      input {
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      textarea:focus,
+      input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        outline: none;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .file-upload {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        background: #f8f9ff;
+        border-radius: 12px;
+        padding: 20px;
+        border: 2px dashed #dce1f9;
+      }
+
+      .file-upload-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .file-label {
+        padding: 14px 25px;
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+      }
+
+      .file-label:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+      }
+
+      .file-label i {
+        margin-right: 10px;
+      }
+
+      .file-input {
+        display: none;
+      }
+
+      .excel-hint {
+        background: #e3f2fd;
+        border-left: 4px solid var(--primary);
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        margin-top: 10px;
+      }
+
+      .excel-hint strong {
+        color: var(--primary);
+      }
+
+      .excel-hint ul {
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+
+      .excel-hint li {
+        margin-bottom: 8px;
+      }
+
+      .controls {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn-primary {
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(120deg, #6a11cb, #2575fc);
+        color: white;
+      }
+
+      .speed-control {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: #f8f9ff;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin: 15px 0;
+      }
+
+      .speed-control label {
+        font-weight: 600;
+        color: var(--dark);
+        min-width: 160px;
+        display: flex;
+        align-items: center;
+      }
+
+      .speed-control label i {
+        margin-right: 10px;
+        color: var(--primary);
+      }
+
+      .speed-slider {
+        flex: 1;
+        -webkit-appearance: none;
+        height: 10px;
+        border-radius: 5px;
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        outline: none;
+      }
+
+      .speed-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--primary);
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .speed-value {
+        min-width: 40px;
+        text-align: center;
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 1.2rem;
+      }
+
+      .chart-container {
+        position: relative;
+        height: 400px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        margin-top: 20px;
+      }
+
+      .results {
+        margin-top: 25px;
+        padding: 25px;
+        background: linear-gradient(120deg, #e0f7fa, #f3e5f5);
+        border-radius: 16px;
+        border-left: 5px solid var(--success);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .results h3 {
+        color: var(--dark);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .results h3 i {
+        margin-right: 10px;
+        color: var(--success);
+      }
+
+      .result-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+      }
+
+      .result-content strong {
+        color: var(--primary);
+      }
+
+      .steps-container {
+        background: #fffde7;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .step-item {
+        padding: 12px 15px;
+        border-left: 4px solid var(--warning);
+        margin-bottom: 10px;
+        background: white;
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .step-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .student-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .student-table th {
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 15px;
+        text-align: left;
+      }
+
+      .student-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .student-table tr:nth-child(even) {
+        background-color: #f8f9ff;
+      }
+
+      .student-table tr:hover {
+        background-color: #eef2ff;
+      }
+
+      .footer {
+        text-align: center;
+        color: white;
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      @media (max-width: 768px) {
         .menu {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 15px;
-          margin-bottom: 25px;
+          flex-direction: column;
         }
 
         .menu-btn {
-          flex: 1;
-          min-width: 200px;
-          padding: 16px 20px;
-          border: none;
-          border-radius: 12px;
-          background: linear-gradient(120deg, #5e72e4, #825ee4);
-          color: white;
-          font-weight: 600;
-          font-size: 1.1rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 4px 15px rgba(94, 114, 228, 0.3);
+          min-width: 100%;
         }
 
-        .menu-btn i {
-          margin-right: 10px;
-          font-size: 1.2rem;
-        }
-
-        .menu-btn:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 6px 20px rgba(94, 114, 228, 0.4);
-        }
-
-        .menu-btn.active {
-          background: linear-gradient(120deg, #00d2b5, #00c6ff);
-          box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
-        }
-
-        .input-section {
-          margin-bottom: 25px;
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-
-        .input-group {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .input-group label {
-          font-weight: 600;
-          color: var(--dark);
-          font-size: 1.1rem;
-          display: flex;
-          align-items: center;
-        }
-
-        .input-group label i {
-          margin-right: 10px;
-          color: var(--primary);
-        }
-
-        textarea,
-        input {
-          padding: 15px;
-          border: 2px solid #e0e0e0;
-          border-radius: 12px;
-          font-family: inherit;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-        }
-
-        textarea:focus,
-        input:focus {
-          border-color: var(--primary);
-          box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-          outline: none;
-        }
-
-        textarea {
-          min-height: 120px;
-          resize: vertical;
-        }
-
-        .file-upload {
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
-          background: #f8f9ff;
-          border-radius: 12px;
-          padding: 20px;
-          border: 2px dashed #dce1f9;
-        }
-
-        .file-upload-content {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          flex-wrap: wrap;
-        }
-
-        .file-label {
-          padding: 14px 25px;
-          background: linear-gradient(120deg, var(--primary), var(--secondary));
-          color: white;
-          border-radius: 12px;
-          cursor: pointer;
-          text-align: center;
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 600;
-          box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
-        }
-
-        .file-label:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
-        }
-
-        .file-label i {
-          margin-right: 10px;
-        }
-
-        .file-input {
-          display: none;
-        }
-
-        .excel-hint {
-          background: #e3f2fd;
-          border-left: 4px solid var(--primary);
-          padding: 15px;
-          border-radius: 8px;
-          font-size: 0.95rem;
-          margin-top: 10px;
-        }
-
-        .excel-hint strong {
-          color: var(--primary);
-        }
-
-        .excel-hint ul {
-          padding-left: 20px;
-          margin-top: 10px;
-        }
-
-        .excel-hint li {
-          margin-bottom: 8px;
+        header h1 {
+          font-size: 2.2rem;
         }
 
         .controls {
-          display: flex;
-          gap: 15px;
-          flex-wrap: wrap;
-          margin-top: 10px;
+          flex-direction: column;
         }
 
         .btn {
-          padding: 15px 30px;
-          border: none;
-          border-radius: 12px;
-          font-weight: 600;
-          font-size: 1.1rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .btn-primary {
-          background: linear-gradient(120deg, var(--primary), var(--secondary));
-          color: white;
-          box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
-          flex: 1;
-        }
-
-        .btn-primary:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
-        }
-
-        .btn-secondary {
-          background: linear-gradient(120deg, #6a11cb, #2575fc);
-          color: white;
-        }
-
-        .speed-control {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          background: #f8f9ff;
-          padding: 15px 20px;
-          border-radius: 12px;
-          margin: 15px 0;
-        }
-
-        .speed-control label {
-          font-weight: 600;
-          color: var(--dark);
-          min-width: 160px;
-          display: flex;
-          align-items: center;
-        }
-
-        .speed-control label i {
-          margin-right: 10px;
-          color: var(--primary);
-        }
-
-        .speed-slider {
-          flex: 1;
-          -webkit-appearance: none;
-          height: 10px;
-          border-radius: 5px;
-          background: linear-gradient(to right, #4facfe, #00f2fe);
-          outline: none;
-        }
-
-        .speed-slider::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: var(--primary);
-          cursor: pointer;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .speed-value {
-          min-width: 40px;
-          text-align: center;
-          font-weight: 700;
-          color: var(--primary);
-          font-size: 1.2rem;
-        }
-
-        .chart-container {
-          position: relative;
-          height: 400px;
-          background: white;
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-          margin-top: 20px;
-        }
-
-        .results {
-          margin-top: 25px;
-          padding: 25px;
-          background: linear-gradient(120deg, #e0f7fa, #f3e5f5);
-          border-radius: 16px;
-          border-left: 5px solid var(--success);
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .results h3 {
-          color: var(--dark);
-          margin-bottom: 15px;
-          display: flex;
-          align-items: center;
-        }
-
-        .results h3 i {
-          margin-right: 10px;
-          color: var(--success);
-        }
-
-        .result-content {
-          line-height: 1.8;
-          font-size: 1.1rem;
-        }
-
-        .result-content strong {
-          color: var(--primary);
-        }
-
-        .steps-container {
-          background: #fffde7;
-          border-radius: 12px;
-          padding: 20px;
-          margin-top: 20px;
-          max-height: 300px;
-          overflow-y: auto;
-        }
-
-        .step-item {
-          padding: 12px 15px;
-          border-left: 4px solid var(--warning);
-          margin-bottom: 10px;
-          background: white;
-          border-radius: 0 8px 8px 0;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .step-item:last-child {
-          margin-bottom: 0;
+          width: 100%;
         }
 
         .student-table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-top: 20px;
-          background: white;
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .student-table th {
-          background: linear-gradient(120deg, var(--primary), var(--secondary));
-          color: white;
-          padding: 15px;
-          text-align: left;
-        }
-
-        .student-table td {
-          padding: 12px 15px;
-          border-bottom: 1px solid #eee;
-        }
-
-        .student-table tr:nth-child(even) {
-          background-color: #f8f9ff;
-        }
-
-        .student-table tr:hover {
-          background-color: #eef2ff;
-        }
-
-        .footer {
-          text-align: center;
-          color: white;
-          margin-top: 30px;
-          padding: 20px;
           font-size: 0.9rem;
-          opacity: 0.8;
         }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          <i class="fas fa-sort-amount-down"></i> Visualisasi Algoritma Nilai Mahasiswa
+        </h1>
+        <p>
+          Bubble Sort, Shell Sort, dan Binary Search dengan visualisasi
+          interaktif untuk data nama dan nilai siswa
+        </p>
+      </header>
 
-        @media (max-width: 768px) {
-          .menu {
-            flex-direction: column;
-          }
-
-          .menu-btn {
-            min-width: 100%;
-          }
-
-          header h1 {
-            font-size: 2.2rem;
-          }
-
-          .controls {
-            flex-direction: column;
-          }
-
-          .btn {
-            width: 100%;
-          }
-
-          .student-table {
-            font-size: 0.9rem;
-          }
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <header>
-          <h1>
-            <i class="fas fa-sort-amount-down"></i> Visualisasi Algoritma Data
-            Siswa
-          </h1>
-          <p>
-            Bubble Sort, Shell Sort, dan Binary Search dengan visualisasi
-            interaktif untuk data nama dan nilai siswa
-          </p>
-        </header>
-
-        <main>
-          <div class="card">
-            <div class="card-header">
-              <i class="fas fa-sliders-h"></i> Kontrol Visualisasi
+      <main>
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-sliders-h"></i> Kontrol Visualisasi
+          </div>
+          <div class="card-body">
+            <div class="menu">
+              <button id="bubbleBtn" class="menu-btn active">
+                <i class="fas fa-water"></i> Bubble Sort
+              </button>
+              <button id="shellBtn" class="menu-btn">
+                <i class="fas fa-layer-group"></i> Shell Sort
+              </button>
+              <button id="binaryBtn" class="menu-btn">
+                <i class="fas fa-search"></i> Binary Search
+              </button>
             </div>
-            <div class="card-body">
-              <div class="menu">
-                <button id="bubbleBtn" class="menu-btn active">
-                  <i class="fas fa-water"></i> Bubble Sort
-                </button>
-                <button id="shellBtn" class="menu-btn">
-                  <i class="fas fa-layer-group"></i> Shell Sort
-                </button>
-                <button id="binaryBtn" class="menu-btn">
-                  <i class="fas fa-search"></i> Binary Search
-                </button>
+
+            <div class="input-section">
+              <div class="input-group">
+                <label for="dataInput">
+                  <i class="fas fa-users"></i> Masukkan data siswa (format:
+                  Nama:Nilai):
+                </label>
+                <textarea
+                  id="dataInput"
+                  rows="3"
+                  placeholder="Contoh: Andi:85, Budi:90, Cici:75, Dedi:65, Eka:95, Fani:80"
+                ></textarea>
               </div>
 
-              <div class="input-section">
-                <div class="input-group">
-                  <label for="dataInput">
-                    <i class="fas fa-users"></i> Masukkan data siswa (format:
-                    Nama:Nilai):
-                  </label>
-                  <textarea
-                    id="dataInput"
-                    rows="3"
-                    placeholder="Contoh: Andi:85, Budi:90, Cici:75, Dedi:65, Eka:95, Fani:80"
-                  ></textarea>
-                </div>
+              <div class="input-group" id="searchGroup" style="display: none">
+                <label for="searchInput">
+                  <i class="fas fa-bullseye"></i> Masukkan nilai yang dicari:
+                </label>
+                <input type="text" id="searchInput" placeholder="Contoh: 80" />
+              </div>
 
-                <div class="input-group" id="searchGroup" style="display: none">
-                  <label for="searchInput">
-                    <i class="fas fa-bullseye"></i> Masukkan nilai yang dicari:
-                  </label>
-                  <input type="text" id="searchInput" placeholder="Contoh: 80" />
-                </div>
-
-                <div class="file-upload">
-                  <div class="file-upload-content">
-                    <input
-                      type="file"
-                      id="fileInput"
-                      class="file-input"
-                      accept=".xlsx,.xls,.txt,.csv"
-                    />
-                    <label for="fileInput" class="file-label">
-                      <i class="fas fa-file-excel"></i> Pilih File Excel/Text
-                    </label>
-                    <span id="fileName">Belum ada file dipilih</span>
-                  </div>
-
-                  <div class="excel-hint">
-                    <strong
-                      ><i class="fas fa-info-circle"></i> Format file Excel yang
-                      didukung:</strong
-                    >
-                    <ul>
-                      <li>File harus memiliki kolom "Nama" dan "Nilai"</li>
-                      <li>Atau format data: "Nama1:Nilai1, Nama2:Nilai2, ..."</li>
-                      <li>
-                        Contoh:
-                        <a href="#" id="downloadExample"
-                          >Download contoh file Excel</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="speed-control" id="speedControl">
-                  <label>
-                    <i class="fas fa-tachometer-alt"></i> Kecepatan Animasi:
-                  </label>
+              <div class="file-upload">
+                <div class="file-upload-content">
                   <input
-                    type="range"
-                    id="speedSlider"
-                    class="speed-slider"
-                    min="1"
-                    max="10"
-                    value="5"
+                    type="file"
+                    id="fileInput"
+                    class="file-input"
+                    accept=".xlsx,.xls,.txt,.csv"
                   />
-                  <div class="speed-value" id="speedValue">5</div>
+                  <label for="fileInput" class="file-label">
+                    <i class="fas fa-file-excel"></i> Pilih File Excel/Text
+                  </label>
+                  <span id="fileName">Belum ada file dipilih</span>
                 </div>
 
-                <div class="controls">
-                  <button id="processBtn" class="btn btn-primary">
-                    <i class="fas fa-play-circle"></i> Jalankan Algoritma
-                  </button>
-                  <button
-                    id="resetBtn"
-                    class="btn"
-                    style="background: #e9ecef; color: #495057"
+                <div class="excel-hint">
+                  <strong
+                    ><i class="fas fa-info-circle"></i> Format file Excel yang
+                    didukung:</strong
                   >
-                    <i class="fas fa-redo"></i> Reset
-                  </button>
+                  <ul>
+                    <li>File harus memiliki kolom "Nama" dan "Nilai"</li>
+                    <li>Atau format data: "Nama1:Nilai1, Nama2:Nilai2, ..."</li>
+                    <li>
+                      Contoh:
+                      <a href="#" id="downloadExample"
+                        >Download contoh file Excel</a
+                      >
+                    </li>
+                  </ul>
                 </div>
+              </div>
+
+              <div class="speed-control" id="speedControl">
+                <label>
+                  <i class="fas fa-tachometer-alt"></i> Kecepatan Animasi:
+                </label>
+                <input
+                  type="range"
+                  id="speedSlider"
+                  class="speed-slider"
+                  min="1"
+                  max="10"
+                  value="5"
+                />
+                <div class="speed-value" id="speedValue">5</div>
+              </div>
+
+              <div class="controls">
+                <button id="processBtn" class="btn btn-primary">
+                  <i class="fas fa-play-circle"></i> Jalankan Algoritma
+                </button>
+                <button
+                  id="resetBtn"
+                  class="btn"
+                  style="background: #e9ecef; color: #495057"
+                >
+                  <i class="fas fa-redo"></i> Reset
+                </button>
               </div>
             </div>
           </div>
-
-          <div class="card">
-            <div class="card-header">
-              <i class="fas fa-chart-bar"></i> Visualisasi Nilai Siswa
-            </div>
-            <div class="card-body">
-              <div class="chart-container">
-                <canvas id="chart"></canvas>
-              </div>
-
-              <div class="results" id="results" style="display: none">
-                <h3><i class="fas fa-poll"></i> Hasil Proses</h3>
-                <div class="result-content" id="resultText"></div>
-
-                <div class="steps-container">
-                  <h4><i class="fas fa-list-ol"></i> Langkah-langkah:</h4>
-                  <div id="steps"></div>
-                </div>
-
-                <table class="student-table" id="studentTable">
-                  <thead>
-                    <tr>
-                      <th>Nama Siswa</th>
-                      <th>Nilai</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tableBody">
-                    <!-- Data siswa akan dimasukkan di sini -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <div class="footer">
-          <p>
-            © 2025 Visualisasi Algoritma Data Siswa | Dibuat oleh : Kelompok 5
-            <i class="fas fa-heart" style="color: #f72585"></i> untuk Ujian
-          </p>
         </div>
-      </div>
 
-      <script src="./script.js"></script>
-    </body>
-  </html>
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-chart-bar"></i> Visualisasi Nilai Siswa
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="chart"></canvas>
+            </div>
+
+            <div class="results" id="results" style="display: none">
+              <h3><i class="fas fa-poll"></i> Hasil Proses</h3>
+              <div class="result-content" id="resultText"></div>
+
+              <div class="steps-container">
+                <h4><i class="fas fa-list-ol"></i> Langkah-langkah:</h4>
+                <div id="steps"></div>
+              </div>
+
+              <table class="student-table" id="studentTable">
+                <thead>
+                  <tr>
+                    <th>Nama Siswa</th>
+                    <th>Nilai</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody">
+                  <!-- Data siswa akan dimasukkan di sini -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div class="footer">
+        <p>
+          © 2025 Visualisasi Algoritma Nilai Mahasiswa | Dibuat oleh : Kelompok 5
+          <i class="fas fa-heart" style="color: #f72585"></i> D3 TEKNIK INFORMATIKA B
+        </p>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

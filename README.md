@@ -1,5 +1,49 @@
-# LANGKAH-LANGKAH INSTALLASI ATAU CLONE PROJECT SORTING NILAI MAHASISWA
-> 1. Download file dalam bentuk .zip dari repository ini
-> 2. Setelah selesai download ekstrak folder hasil download ke dalam lokasi yang anda inginkan
-> 3. Untuk melakukan pengeditan buka text editor yang anda punya seperti Visual studio code, sublime text, Atom atau yang lain, dan arahkan pada folder yang telah di ekstrak
-> 4. Untuk menjalankan di local kunjungi browser seperti chrome atau mozila dan cari dimana tempat penyimpanan file index.html pada folder yang telah di ekstrak dan copas pada url browser contoh D:\13 KULIAH\SEMESTER-2\01 OPERATING SYSTEM\PRAKTIKUM\sorting-asd
+# 📊 Project: Sorting Nilai Mahasiswa
+
+Dokumen ini berisi panduan langkah demi langkah untuk meng-clone dan menjalankan project **Sorting Nilai Mahasiswa** secara lokal di perangkat Anda.
+
+---
+
+## 🚀 Langkah-Langkah Instalasi
+
+### 1. 📥 Download Project
+Unduh repository dalam bentuk `.zip` melalui halaman GitHub repository ini.
+
+### 2. 📂 Ekstrak File
+Setelah proses download selesai, **ekstrak** folder `.zip` ke direktori yang Anda inginkan di komputer Anda.
+
+### 3. 🛠️ Buka di Text Editor
+Buka folder hasil ekstrak menggunakan text editor favorit Anda seperti:
+- [Visual Studio Code](https://code.visualstudio.com/)
+- Sublime Text
+- Atom
+- atau editor lainnya
+
+> **Tips:** Di Visual Studio Code, klik `File > Open Folder...` lalu arahkan ke folder hasil ekstrak.
+
+### 4. 🌐 Jalankan di Browser
+Untuk menjalankan project di browser secara lokal:
+- Buka browser (misalnya: Chrome, Firefox, Edge)
+- Arahkan ke lokasi penyimpanan file `index.html` dari folder hasil ekstrak
+- Salin path tersebut dan tempelkan di address bar browser Anda
+
+**Contoh:**
+D:\13 KULIAH\SEMESTER-2\01 OPERATING SYSTEM\PRAKTIKUM\sorting-asd\index.html
+
+
+Tekan `Enter` dan project akan langsung tampil di browser Anda.
+
+---
+
+## 👥 Tim Pengembang
+
+| Nama                          | GitHub Profile                                       |
+|-------------------------------|------------------------------------------------------|
+| Afriq Fadlil Azim             | [@afaaa21](https://github.com/afaaa21)              |
+| Muhammad Rizqi Putra Nugroho | [@RizWithYa](https://github.com/RizWithYa)          |
+| Havid Rosihandanu             | [@Havidrosihandanu](https://github.com/Havidrosihandanu) |
+
+---
+
+## 📌 Catatan Tambahan
+Pastikan Anda memiliki browser dan text editor yang telah terinstal sebelum menjalankan project ini. Project ini berjalan sepenuhnya di sisi client, jadi tidak memerlukan backend atau database.
